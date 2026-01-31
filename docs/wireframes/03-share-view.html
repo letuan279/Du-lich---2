@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Du Lịch Hạ Long 2026 - Lịch trình chuyến đi</title>
+  
+  <!-- Open Graph for sharing -->
+  <meta property="og:title" content="Du Lịch Hạ Long 2026">
+  <meta property="og:description" content="Lịch trình 4 ngày khám phá Vịnh Hạ Long · 4 người · ₫10,200,000">
+  <meta property="og:type" content="website">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#F0FDFA',
+              100: '#CCFBF1',
+              200: '#99F6E4',
+              500: '#0D9488',
+              600: '#0F766E',
+              700: '#115E59',
+              800: '#134E4A',
+            },
+            category: {
+              transport: '#3B82F6',
+              'transport-bg': '#EFF6FF',
+              food: '#F97316',
+              'food-bg': '#FFF7ED',
+              stay: '#8B5CF6',
+              'stay-bg': '#F5F3FF',
+              tickets: '#EC4899',
+              'tickets-bg': '#FDF2F8',
+              other: '#6B7280',
+              'other-bg': '#F9FAFB',
+            },
+          },
+          fontFamily: {
+            sans: ['Source Sans 3', 'system-ui', 'sans-serif'],
+            display: ['Lexend', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+  
+  <style>
+    /* Print optimization */
+    @media print {
+      body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+    
+    /* Smooth gradient background */
+    .hero-gradient {
+      background: linear-gradient(180deg, #F0FDFA 0%, #FFFFFF 100%);
+    }
+    
+    /* Timeline dot */
+    .timeline-dot {
+      position: relative;
+    }
+    .timeline-dot::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    
+    /* Subtle card hover */
+    .day-card {
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .day-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-white font-sans text-gray-800 antialiased">
+  
+  <!-- ANNOTATION: Share View Header (Non-sticky, minimal) -->
+  <!-- Clean header with logo/brand and copy link action -->
+  <header class="no-print border-b border-gray-100">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center">
+            <i data-lucide="map" class="w-4 h-4 text-white"></i>
+          </div>
+          <span class="font-display font-semibold text-gray-800">TripPlanner</span>
+        </div>
+        <button onclick="copyLink()" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-600 hover:bg-primary-50 rounded-lg transition-all">
+          <i data-lucide="link" class="w-4 h-4"></i>
+          <span>Sao chép link</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <!-- ANNOTATION: Hero Section (Poster-style) -->
+  <!-- Clean summary: trip name, dates, people count, total cost, per-person -->
+  <section class="hero-gradient">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
+      <!-- Trip Title -->
+      <h1 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-3">
+        Du Lịch Hạ Long 2026
+      </h1>
+      
+      <!-- Date Range -->
+      <p class="text-lg text-gray-600 mb-8">
+        <span class="inline-flex items-center gap-2">
+          <i data-lucide="calendar" class="w-5 h-5 text-primary-500"></i>
+          15 - 18 Tháng 2, 2026
+        </span>
+      </p>
+      
+      <!-- Stats Cards -->
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+        <!-- Duration -->
+        <div class="bg-white rounded-xl px-5 py-4 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+              <i data-lucide="sun" class="w-5 h-5 text-primary-500"></i>
+            </div>
+            <div class="text-left">
+              <p class="text-sm text-gray-500">Thời gian</p>
+              <p class="font-display font-semibold text-gray-800">4 ngày 3 đêm</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- People -->
+        <div class="bg-white rounded-xl px-5 py-4 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+              <i data-lucide="users" class="w-5 h-5 text-primary-500"></i>
+            </div>
+            <div class="text-left">
+              <p class="text-sm text-gray-500">Số người</p>
+              <p class="font-display font-semibold text-gray-800">4 người</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Total Cost -->
+        <div class="bg-white rounded-xl px-5 py-4 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+              <i data-lucide="wallet" class="w-5 h-5 text-primary-500"></i>
+            </div>
+            <div class="text-left">
+              <p class="text-sm text-gray-500">Tổng chi phí</p>
+              <p class="font-display font-semibold text-gray-800 font-mono">₫10,200,000</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Per Person -->
+        <div class="bg-primary-500 rounded-xl px-5 py-4 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+              <i data-lucide="user" class="w-5 h-5 text-white"></i>
+            </div>
+            <div class="text-left">
+              <p class="text-sm text-primary-100">Chi phí/người</p>
+              <p class="font-display font-semibold text-white font-mono">₫2,550,000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ANNOTATION: Timeline Section (Story format) -->
+  <!-- Each day as a story card with activities listed cleanly -->
+  <section class="py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h2 class="font-display font-bold text-2xl text-gray-900 mb-8 text-center">
+        Lịch trình chi tiết
+      </h2>
+      
+      <!-- Day Cards -->
+      <div class="space-y-6">
+        
+        <!-- Day 1 -->
+        <article class="day-card bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <!-- Day Header -->
+          <div class="bg-gray-50 px-5 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-primary-500 flex items-center justify-center text-white font-display font-bold text-lg">
+                1
+              </div>
+              <div>
+                <h3 class="font-display font-semibold text-lg text-gray-800">Ngày 1 - Khởi hành</h3>
+                <p class="text-sm text-gray-500">Thứ Bảy, 15 Tháng 2, 2026</p>
+              </div>
+              <div class="ml-auto text-right">
+                <p class="text-xs text-gray-500">Chi phí ngày</p>
+                <p class="font-mono font-semibold text-gray-800">₫6,000,000</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Activities List -->
+          <div class="px-5 sm:px-6 py-5">
+            <div class="space-y-4 ml-6 border-l-2 border-gray-100 pl-6">
+              
+              <!-- Activity 1 -->
+              <div class="relative timeline-dot text-category-transport">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">06:00</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-transport-bg text-category-transport rounded">
+                        Di chuyển
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Xe từ Hà Nội đến Hạ Long</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Bến xe Mỹ Đình → Bến xe Bãi Cháy
+                    </p>
+                    <p class="text-sm font-mono text-gray-700 mt-1">₫600,000</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Activity 2 -->
+              <div class="relative timeline-dot text-category-stay">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">11:00</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-stay-bg text-category-stay rounded">
+                        Lưu trú
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Check-in Khách sạn Mường Thanh</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Bãi Cháy, Hạ Long
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1">2 phòng × 3 đêm</p>
+                    <p class="text-sm font-mono text-gray-700">₫2,400,000</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Activity 3 -->
+              <div class="relative timeline-dot text-category-food">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">12:30</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-food-bg text-category-food rounded">
+                        Ăn uống
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Ăn trưa hải sản Bãi Cháy</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Nhà hàng Hải sản Biển Đông
+                    </p>
+                    <p class="text-sm font-mono text-gray-700 mt-1">₫800,000</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Activity 4 -->
+              <div class="relative timeline-dot text-category-tickets">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">14:00</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-tickets-bg text-category-tickets rounded">
+                        Vé
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Vé tham quan Sun World</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Sun World Hạ Long Park
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1">4 người × 300k</p>
+                    <p class="text-sm font-mono text-gray-700">₫1,200,000</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Activity 5 -->
+              <div class="relative timeline-dot text-category-food">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">19:00</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-food-bg text-category-food rounded">
+                        Ăn uống
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Ăn tối + BBQ hải sản</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Chợ đêm Bãi Cháy
+                    </p>
+                    <p class="text-sm font-mono text-gray-700 mt-1">₫1,000,000</p>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </article>
+        
+        <!-- Day 2 -->
+        <article class="day-card bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="bg-gray-50 px-5 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-primary-500 flex items-center justify-center text-white font-display font-bold text-lg">
+                2
+              </div>
+              <div>
+                <h3 class="font-display font-semibold text-lg text-gray-800">Ngày 2 - Khám phá Vịnh</h3>
+                <p class="text-sm text-gray-500">Chủ Nhật, 16 Tháng 2, 2026</p>
+              </div>
+              <div class="ml-auto text-right">
+                <p class="text-xs text-gray-500">Chi phí ngày</p>
+                <p class="font-mono font-semibold text-gray-800">₫4,200,000</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="px-5 sm:px-6 py-5">
+            <div class="space-y-4 ml-6 border-l-2 border-gray-100 pl-6">
+              
+              <!-- Cruise -->
+              <div class="relative timeline-dot text-category-tickets">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">08:00</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-tickets-bg text-category-tickets rounded">
+                        Vé
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Tour du thuyền Vịnh Hạ Long</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Cảng tàu khách quốc tế Tuần Châu
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1.5 bg-gray-50 rounded-lg p-2">
+                      🚢 Bao gồm: Tham quan hang Sửng Sốt, đảo Ti Tốp, chèo kayak. Bữa trưa trên tàu.
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1">4 người × 900k (6h tour)</p>
+                    <p class="text-sm font-mono text-gray-700">₫3,600,000</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Dinner -->
+              <div class="relative timeline-dot text-category-food">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">18:00</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-food-bg text-category-food rounded">
+                        Ăn uống
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Ăn tối Hàu nướng phô mai</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Quán Hàu Sữa - Bãi Cháy
+                    </p>
+                    <p class="text-sm font-mono text-gray-700 mt-1">₫600,000</p>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </article>
+        
+        <!-- Day 3 (Abbreviated) -->
+        <article class="day-card bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="bg-gray-50 px-5 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-primary-500 flex items-center justify-center text-white font-display font-bold text-lg">
+                3
+              </div>
+              <div>
+                <h3 class="font-display font-semibold text-lg text-gray-800">Ngày 3 - Tự do khám phá</h3>
+                <p class="text-sm text-gray-500">Thứ Hai, 17 Tháng 2, 2026</p>
+              </div>
+              <div class="ml-auto text-right">
+                <p class="text-xs text-gray-500">Chi phí ngày</p>
+                <p class="font-mono font-semibold text-gray-800">₫0</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="px-5 sm:px-6 py-5">
+            <p class="text-gray-500 text-sm italic text-center py-4">
+              Ngày tự do - Nghỉ ngơi và khám phá Bãi Cháy
+            </p>
+          </div>
+        </article>
+        
+        <!-- Day 4 (Return) -->
+        <article class="day-card bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="bg-gray-50 px-5 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-primary-500 flex items-center justify-center text-white font-display font-bold text-lg">
+                4
+              </div>
+              <div>
+                <h3 class="font-display font-semibold text-lg text-gray-800">Ngày 4 - Trở về</h3>
+                <p class="text-sm text-gray-500">Thứ Ba, 18 Tháng 2, 2026</p>
+              </div>
+              <div class="ml-auto text-right">
+                <p class="text-xs text-gray-500">Chi phí ngày</p>
+                <p class="font-mono font-semibold text-gray-800">₫0</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="px-5 sm:px-6 py-5">
+            <div class="space-y-4 ml-6 border-l-2 border-gray-100 pl-6">
+              <div class="relative timeline-dot text-category-transport">
+                <div class="flex items-start gap-3">
+                  <span class="text-xs font-mono text-gray-500 w-12 pt-0.5">09:00</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium uppercase tracking-wide bg-category-transport-bg text-category-transport rounded">
+                        Di chuyển
+                      </span>
+                    </div>
+                    <h4 class="font-medium text-gray-800">Check-out & Xe về Hà Nội</h4>
+                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      Bến xe Bãi Cháy → Hà Nội
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1 italic">Đã tính trong vé khứ hồi</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+      </div>
+    </div>
+  </section>
+  
+  <!-- ANNOTATION: Category Breakdown Section -->
+  <!-- Clean visual breakdown of costs by category -->
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h2 class="font-display font-bold text-2xl text-gray-900 mb-8 text-center">
+        Phân bổ chi phí
+      </h2>
+      
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="p-6">
+          <!-- Visual bars -->
+          <div class="space-y-5">
+            
+            <!-- Tickets (largest) -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-category-tickets-bg flex items-center justify-center">
+                    <i data-lucide="ticket" class="w-5 h-5 text-category-tickets"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-800">Vé tham quan</p>
+                    <p class="text-xs text-gray-500">47% tổng chi phí</p>
+                  </div>
+                </div>
+                <span class="font-mono font-semibold text-gray-800">₫4,800,000</span>
+              </div>
+              <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-category-tickets rounded-full transition-all" style="width: 47%"></div>
+              </div>
+            </div>
+            
+            <!-- Stay -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-category-stay-bg flex items-center justify-center">
+                    <i data-lucide="bed" class="w-5 h-5 text-category-stay"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-800">Lưu trú</p>
+                    <p class="text-xs text-gray-500">24% tổng chi phí</p>
+                  </div>
+                </div>
+                <span class="font-mono font-semibold text-gray-800">₫2,400,000</span>
+              </div>
+              <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-category-stay rounded-full transition-all" style="width: 24%"></div>
+              </div>
+            </div>
+            
+            <!-- Food -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-category-food-bg flex items-center justify-center">
+                    <i data-lucide="utensils" class="w-5 h-5 text-category-food"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-800">Ăn uống</p>
+                    <p class="text-xs text-gray-500">24% tổng chi phí</p>
+                  </div>
+                </div>
+                <span class="font-mono font-semibold text-gray-800">₫2,400,000</span>
+              </div>
+              <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-category-food rounded-full transition-all" style="width: 24%"></div>
+              </div>
+            </div>
+            
+            <!-- Transport -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-category-transport-bg flex items-center justify-center">
+                    <i data-lucide="car" class="w-5 h-5 text-category-transport"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-800">Di chuyển</p>
+                    <p class="text-xs text-gray-500">6% tổng chi phí</p>
+                  </div>
+                </div>
+                <span class="font-mono font-semibold text-gray-800">₫600,000</span>
+              </div>
+              <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-category-transport rounded-full transition-all" style="width: 6%"></div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+        <!-- Total Row -->
+        <div class="bg-primary-500 px-6 py-5">
+          <div class="flex items-center justify-between text-white">
+            <div>
+              <p class="text-primary-100 text-sm">Tổng chi phí chuyến đi</p>
+              <p class="font-display font-bold text-2xl font-mono">₫10,200,000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-primary-100 text-sm">Chi phí mỗi người</p>
+              <p class="font-display font-bold text-2xl font-mono">₫2,550,000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ANNOTATION: Footer -->
+  <!-- Minimal footer with creation info and CTA -->
+  <footer class="py-8 border-t border-gray-100 no-print">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <p class="text-sm text-gray-500 mb-4">
+        Lịch trình được tạo với <span class="text-primary-500 font-medium">TripPlanner</span>
+      </p>
+      <a href="#" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-primary-500 rounded-xl hover:bg-primary-600 transition-all shadow-sm">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        Tạo lịch trình của bạn
+      </a>
+    </div>
+  </footer>
+  
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+    
+    // Copy link function
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Đã sao chép link!');
+      }).catch(() => {
+        alert('Không thể sao chép link');
+      });
+    }
+  </script>
+  
+  <!-- WIREFRAME ANNOTATIONS -->
+  <!--
+  ===========================================
+  SHARE VIEW (POSTER-STYLE) - WIREFRAME ANNOTATIONS
+  ===========================================
+  
+  DESIGN PRINCIPLES:
+  - Read-only, no interactive editing
+  - Clean, printable layout
+  - Story-like flow through days
+  - Focus on readability
+  - Minimal chrome
+  
+  LAYOUT:
+  - Single column, max-width 768px (max-w-3xl)
+  - Generous whitespace
+  - No sticky elements
+  - Optimized for sharing/printing
+  
+  HERO SECTION:
+  - Gradient background (primary-50 to white)
+  - Centered trip title (large display font)
+  - Date range with calendar icon
+  - Stats cards: Duration, People, Total, Per-person
+  - Per-person card highlighted (primary color)
+  
+  DAY CARDS:
+  - Rounded cards with subtle shadows
+  - Gray header with day number, title, date
+  - Daily cost total in header
+  - Timeline with colored dots (category colors)
+  - Activities show: time, category chip, title, location, notes, cost
+  
+  CATEGORY BREAKDOWN:
+  - Horizontal progress bars
+  - Icons for each category
+  - Percentage labels
+  - Total footer with primary background
+  
+  TYPOGRAPHY:
+  - Display font (Lexend): Titles, day numbers
+  - Body font (Source Sans 3): Content
+  - Mono font (JetBrains Mono): All costs, times
+  
+  COLORS:
+  - Primary teal for accents
+  - Category colors for chips and dots only
+  - Neutral grays for text hierarchy
+  
+  PRINT OPTIMIZATION:
+  - @media print rules
+  - .no-print class for header/footer
+  - print-color-adjust for backgrounds
+  
+  RESPONSIVE:
+  - Mobile (< 640px): Smaller padding, stacked stats
+  - Tablet/Desktop (640px+): More generous spacing
+  -->
+</body>
+</html>
