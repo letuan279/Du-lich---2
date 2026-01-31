@@ -16,55 +16,55 @@ function TripCard({ trip, onDelete }: { trip: Trip; onDelete: () => void }) {
   
   return (
     <Card 
-      className="hover:shadow-lg transition-shadow cursor-pointer group relative"
+      className="hover:shadow-xl hover:scale-[1.02] transition-all duration-200 cursor-pointer group relative border-2 border-transparent hover:border-teal-200 rounded-2xl"
       onClick={() => router.push(`/trip/${trip.id}`)}
     >
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div>
-            <CardTitle className="font-[family-name:var(--font-display)] text-lg">
+            <CardTitle className="font-[family-name:var(--font-display)] text-xl font-bold text-gray-800">
               {trip.title}
             </CardTitle>
-            <CardDescription className="flex items-center gap-1 mt-1">
-              <Calendar className="h-3.5 w-3.5" />
+            <CardDescription className="flex items-center gap-1.5 mt-2 text-base">
+              <Calendar className="h-4 w-4 text-teal-500" />
               {formatDateRange(trip.startDate, trip.endDate)}
             </CardDescription>
           </div>
           <Button
             variant="ghost"
             size="icon"
-            className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8"
+            className="opacity-0 group-hover:opacity-100 transition-opacity h-10 w-10 rounded-full hover:bg-red-50"
             onClick={(e) => {
               e.stopPropagation();
               onDelete();
             }}
           >
-            <Trash2 className="h-4 w-4 text-destructive" />
+            <Trash2 className="h-5 w-5 text-destructive" />
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <Users className="h-3.5 w-3.5" />
-            {trip.numberOfPeople} người
+      <CardContent className="pt-0">
+        <div className="flex items-center gap-5 text-base text-gray-600">
+          <span className="flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-full">
+            <Users className="h-4 w-4 text-blue-500" />
+            <span className="font-medium">{trip.numberOfPeople}</span> người
           </span>
-          <span className="flex items-center gap-1">
-            <MapPin className="h-3.5 w-3.5" />
-            {trip.days.length} ngày
+          <span className="flex items-center gap-1.5 bg-green-50 px-3 py-1.5 rounded-full">
+            <MapPin className="h-4 w-4 text-green-500" />
+            <span className="font-medium">{trip.days.length}</span> ngày
           </span>
         </div>
         {breakdown.total > 0 && (
-          <div className="mt-3 pt-3 border-t">
+          <div className="mt-4 pt-4 border-t-2 border-dashed border-gray-100">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Tổng chi phí</span>
-              <span className="font-[family-name:var(--font-cost)] font-medium text-primary">
+              <span className="text-base text-gray-500">Tổng chi phí</span>
+              <span className="font-[family-name:var(--font-cost)] font-bold text-xl text-teal-600">
                 {formatCurrency(breakdown.total, trip.currency)}
               </span>
             </div>
-            <div className="flex justify-between items-center mt-1">
-              <span className="text-xs text-muted-foreground">Mỗi người</span>
-              <span className="font-[family-name:var(--font-cost)] text-sm">
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-sm text-gray-400">Mỗi người</span>
+              <span className="font-[family-name:var(--font-cost)] text-base text-gray-600">
                 {formatCurrency(breakdown.perPerson, trip.currency)}
               </span>
             </div>
@@ -100,46 +100,49 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-8">
-          <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold text-gray-900">
-            Du Lịch Hạ Long
+    <main className="min-h-screen bg-gradient-ocean p-5 md:p-10">
+      <div className="max-w-5xl mx-auto">
+        <header className="mb-10 text-center md:text-left">
+          <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-bold text-gray-800">
+            🌊 Du Lịch Hạ Long
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-gray-500 mt-3 text-lg">
             Lập kế hoạch chuyến đi với chi phí rõ ràng
           </p>
         </header>
 
         <Button 
           onClick={() => router.push('/trip/new')}
-          className="mb-6 bg-teal-600 hover:bg-teal-700"
+          className="mb-8 bg-teal-500 hover:bg-teal-600 text-white h-12 px-6 text-base rounded-xl shadow-lg hover:shadow-xl transition-all"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="h-5 w-5 mr-2" />
           Tạo chuyến đi mới
         </Button>
 
         {trips.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="py-12 text-center">
-              <MapPin className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
-              <h3 className="font-[family-name:var(--font-display)] text-lg font-medium text-gray-700">
+          <Card className="border-2 border-dashed border-gray-200 rounded-2xl bg-white/80 backdrop-blur">
+            <CardContent className="py-16 text-center">
+              <div className="animate-bounce-soft">
+                <MapPin className="h-16 w-16 mx-auto text-teal-300 mb-6" />
+              </div>
+              <h3 className="font-[family-name:var(--font-display)] text-2xl font-bold text-gray-700">
                 Chưa có chuyến đi nào
               </h3>
-              <p className="text-muted-foreground mt-1 mb-4">
+              <p className="text-gray-500 mt-3 mb-6 text-lg">
                 Bắt đầu lập kế hoạch chuyến du lịch đầu tiên của bạn
               </p>
               <Button 
                 variant="outline"
                 onClick={() => router.push('/trip/new')}
+                className="h-11 px-6 text-base rounded-xl border-2 hover:bg-teal-50 hover:border-teal-300"
               >
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="h-5 w-5 mr-2" />
                 Tạo chuyến đi
               </Button>
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             {trips.map((trip) => (
               <TripCard 
                 key={trip.id} 

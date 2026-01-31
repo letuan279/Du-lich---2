@@ -39,34 +39,36 @@ export function DayColumn({
   const dayTotal = day.activities.reduce((sum, a) => sum + (a.costEstimate || 0), 0);
 
   return (
-    <div className="mb-6">
-      <div className="flex items-center justify-between mb-3 sticky top-[72px] bg-gray-50 py-2 z-10">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-medium">
+    <div className="mb-8">
+      <div className="flex items-center justify-between mb-4 sticky top-[72px] bg-gradient-to-r from-teal-50 to-cyan-50 py-3 px-4 z-10 rounded-xl shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-teal-500 text-white flex items-center justify-center text-lg font-bold shadow-md">
             {dayNumber}
           </div>
           <div>
-            <h3 className="font-[family-name:var(--font-display)] font-semibold text-gray-800">
+            <h3 className="font-[family-name:var(--font-display)] font-bold text-lg text-gray-800">
               Ngày {dayNumber}
             </h3>
-            <p className="text-xs text-muted-foreground flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
+            <p className="text-sm text-gray-500 flex items-center gap-1.5">
+              <Calendar className="h-4 w-4 text-teal-500" />
               {formatDate(day.date)}
             </p>
           </div>
         </div>
         {dayTotal > 0 && (
-          <span className="font-[family-name:var(--font-cost)] text-sm text-muted-foreground">
-            {formatCurrency(dayTotal, currency)}
-          </span>
+          <div className="text-right">
+            <span className="font-[family-name:var(--font-cost)] text-lg font-bold text-teal-600">
+              {formatCurrency(dayTotal, currency)}
+            </span>
+          </div>
         )}
       </div>
 
       <SortableContext items={day.activities.map(a => a.id)} strategy={verticalListSortingStrategy}>
         <div
           ref={setNodeRef}
-          className={`space-y-2 min-h-[60px] rounded-lg transition-colors ${
-            isOver ? 'bg-teal-50 border-2 border-dashed border-teal-200' : ''
+          className={`space-y-3 min-h-[80px] rounded-xl transition-colors p-2 ${
+            isOver ? 'bg-teal-50 border-2 border-dashed border-teal-300' : ''
           }`}
         >
           {day.activities.map((activity) => (
@@ -80,14 +82,14 @@ export function DayColumn({
           ))}
           
           {day.activities.length === 0 && !isOver && (
-            <div className="text-center py-4 text-muted-foreground text-sm">
-              Chưa có hoạt động nào
+            <div className="text-center py-8 text-gray-400 text-base">
+              📝 Chưa có hoạt động nào
             </div>
           )}
         </div>
       </SortableContext>
 
-      <div className="mt-3">
+      <div className="mt-4">
         <AddActivityForm onAdd={onAddActivity} />
       </div>
     </div>

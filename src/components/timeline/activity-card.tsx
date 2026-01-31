@@ -48,21 +48,21 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
         ref={setNodeRef}
         style={style}
         className={cn(
-          'group relative border-l-4 transition-all',
+          'group relative border-l-4 transition-all rounded-xl hover:shadow-md',
           colors.border,
           isDragging && 'opacity-50 shadow-lg scale-[1.02]'
         )}
       >
-        <CardContent className="p-3">
-          <div className="flex items-start gap-2">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3">
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   {...attributes}
                   {...listeners}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing p-1 -ml-1"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing p-1.5 -ml-1 hover:bg-gray-100 rounded-lg"
                 >
-                  <GripVertical className="h-4 w-4 text-muted-foreground" />
+                  <GripVertical className="h-5 w-5 text-gray-400" />
                 </button>
               </TooltipTrigger>
               <TooltipContent side="left">
@@ -71,7 +71,7 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
             </Tooltip>
 
             <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-2">
+              <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   {isEditing ? (
                     <Input
@@ -80,13 +80,13 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
                       onBlur={() => setIsEditing(false)}
                       onKeyDown={(e) => e.key === 'Enter' && setIsEditing(false)}
                       autoFocus
-                      className="h-7 text-sm font-medium"
+                      className="h-9 text-base font-semibold"
                     />
                   ) : (
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <h4 
-                          className="font-medium text-sm truncate cursor-pointer hover:text-primary"
+                          className="font-semibold text-base text-gray-800 truncate cursor-pointer hover:text-teal-600 transition-colors"
                           onClick={() => setIsEditing(true)}
                         >
                           {activity.title}
@@ -98,14 +98,14 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
                     </Tooltip>
                   )}
                   
-                  <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <Badge variant="secondary" className={cn('text-xs', colors.bg, colors.text)}>
+                  <div className="flex items-center gap-2.5 mt-2 flex-wrap">
+                    <Badge variant="secondary" className={cn('text-sm px-2.5 py-0.5 rounded-full font-medium', colors.bg, colors.text)}>
                       {CATEGORY_LABELS[activity.category]}
                     </Badge>
                     
                     {activity.timeStart && (
-                      <span className="text-xs text-muted-foreground flex items-center gap-0.5">
-                        <Clock className="h-3 w-3" />
+                      <span className="text-sm text-gray-500 flex items-center gap-1 bg-gray-50 px-2 py-0.5 rounded-full">
+                        <Clock className="h-3.5 w-3.5" />
                         {activity.timeStart}
                         {activity.timeEnd && ` - ${activity.timeEnd}`}
                       </span>
@@ -114,8 +114,8 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
                     {activity.locationText && (
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <span className="text-xs text-muted-foreground flex items-center gap-0.5 truncate max-w-[150px]">
-                            <MapPin className="h-3 w-3 shrink-0" />
+                          <span className="text-sm text-gray-500 flex items-center gap-1 truncate max-w-[180px]">
+                            <MapPin className="h-3.5 w-3.5 shrink-0 text-red-400" />
                             {activity.locationText}
                           </span>
                         </TooltipTrigger>
@@ -127,34 +127,34 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 shrink-0">
+                <div className="flex items-center gap-1.5 shrink-0">
                   <Input
                     type="number"
                     value={activity.costEstimate || ''}
                     onChange={(e) => onUpdate({ costEstimate: parseInt(e.target.value) || 0 })}
                     placeholder="0"
-                    className="w-24 h-7 text-right font-[family-name:var(--font-cost)] text-sm"
+                    className="w-28 h-9 text-right font-[family-name:var(--font-cost)] text-base font-medium"
                   />
-                  <span className="text-xs text-muted-foreground">{currency === 'VND' ? '₫' : '$'}</span>
+                  <span className="text-sm text-gray-400 font-medium">{currency === 'VND' ? '₫' : '$'}</span>
                 </div>
               </div>
 
               {(activity.notes || isExpanded) && (
-                <div className="mt-2">
+                <div className="mt-3">
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="h-6 px-2 text-xs text-muted-foreground"
+                    className="h-8 px-3 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     {isExpanded ? (
                       <>
-                        <ChevronUp className="h-3 w-3 mr-1" />
+                        <ChevronUp className="h-4 w-4 mr-1" />
                         Thu gọn
                       </>
                     ) : (
                       <>
-                        <ChevronDown className="h-3 w-3 mr-1" />
+                        <ChevronDown className="h-4 w-4 mr-1" />
                         Ghi chú
                       </>
                     )}
@@ -165,7 +165,7 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
                       value={activity.notes || ''}
                       onChange={(e) => onUpdate({ notes: e.target.value })}
                       placeholder="Thêm ghi chú..."
-                      className="mt-2"
+                      className="mt-2 text-base rounded-xl"
                       rows={2}
                     />
                   )}
@@ -178,24 +178,24 @@ export function ActivityCard({ activity, currency, onUpdate, onDelete, onDuplica
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="opacity-0 group-hover:opacity-100 transition-opacity h-7 w-7"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity h-9 w-9 rounded-full hover:bg-gray-100"
                 >
-                  <MoreHorizontal className="h-4 w-4" />
+                  <MoreHorizontal className="h-5 w-5 text-gray-500" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setIsEditing(true)}>
+              <DropdownMenuContent align="end" className="rounded-xl">
+                <DropdownMenuItem onClick={() => setIsEditing(true)} className="text-base py-2.5">
                   <Pencil className="h-4 w-4 mr-2" />
                   Sửa tên
                 </DropdownMenuItem>
                 {onDuplicate && (
-                  <DropdownMenuItem onClick={onDuplicate}>
+                  <DropdownMenuItem onClick={onDuplicate} className="text-base py-2.5">
                     <Copy className="h-4 w-4 mr-2" />
                     Nhân bản
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={onDelete} className="text-destructive">
+                <DropdownMenuItem onClick={onDelete} className="text-destructive text-base py-2.5">
                   <Trash2 className="h-4 w-4 mr-2" />
                   Xóa
                 </DropdownMenuItem>
