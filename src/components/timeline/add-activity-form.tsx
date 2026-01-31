@@ -4,7 +4,10 @@ import { useState } from 'react';
 import { Plus, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { ACTIVITY_CATEGORIES } from '@/lib/constants';
 import { type ActivityCategory } from '@/types';
 
@@ -16,6 +19,7 @@ interface AddActivityFormProps {
     timeEnd?: string;
     locationText?: string;
     costEstimate?: number;
+    notes?: string;
   }) => void;
 }
 
@@ -27,6 +31,8 @@ export function AddActivityForm({ onAdd }: AddActivityFormProps) {
   const [timeEnd, setTimeEnd] = useState('');
   const [location, setLocation] = useState('');
   const [cost, setCost] = useState('');
+  const [notes, setNotes] = useState('');
+  const [showNotes, setShowNotes] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +45,7 @@ export function AddActivityForm({ onAdd }: AddActivityFormProps) {
       timeEnd: timeEnd || undefined,
       locationText: location || undefined,
       costEstimate: cost ? parseInt(cost) : undefined,
+      notes: notes || undefined,
     });
     
     setTitle('');
@@ -47,6 +54,8 @@ export function AddActivityForm({ onAdd }: AddActivityFormProps) {
     setTimeEnd('');
     setLocation('');
     setCost('');
+    setNotes('');
+    setShowNotes(false);
     setIsOpen(false);
   };
 
@@ -68,65 +77,95 @@ export function AddActivityForm({ onAdd }: AddActivityFormProps) {
       <CardContent className="p-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex gap-2">
-            <Input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Tên hoạt động *"
-              autoFocus
-              className="flex-1"
-            />
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value as ActivityCategory)}
-              className="w-32 rounded-md border border-input bg-background px-3 py-2 text-sm"
-            >
-              {ACTIVITY_CATEGORIES.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
+            <div className="flex-1">
               <Input
-                type="time"
-                value={timeStart}
-                onChange={(e) => setTimeStart(e.target.value)}
-                placeholder="Bắt đầu"
-                className="flex-1"
-              />
-              <span className="text-muted-foreground">-</span>
-              <Input
-                type="time"
-                value={timeEnd}
-                onChange={(e) => setTimeEnd(e.target.value)}
-                placeholder="Kết thúc"
-                className="flex-1"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Tên hoạt động *"
+                autoFocus
               />
             </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-muted-foreground shrink-0" />
+            <Select value={category} onValueChange={(v) => setCategory(v as ActivityCategory)}>
+              <SelectTrigger className="w-36">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {ACTIVITY_CATEGORIES.map((cat) => (
+                  <SelectItem key={cat.id} value={cat.id}>
+                    {cat.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground flex items-center gap-1">
+                <Clock className="h-3 w-3" />
+                Thời gian
+              </Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  type="time"
+                  value={timeStart}
+                  onChange={(e) => setTimeStart(e.target.value)}
+                  className="flex-1"
+                />
+                <span className="text-muted-foreground">-</span>
+                <Input
+                  type="time"
+                  value={timeEnd}
+                  onChange={(e) => setTimeEnd(e.target.value)}
+                  className="flex-1"
+                />
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground flex items-center gap-1">
+                <MapPin className="h-3 w-3" />
+                Địa điểm
+              </Label>
               <Input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="Địa điểm"
-                className="flex-1"
+                placeholder="Nhập địa điểm"
               />
             </div>
           </div>
 
+          {showNotes && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Ghi chú</Label>
+              <Textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Thêm ghi chú cho hoạt động này..."
+                rows={2}
+              />
+            </div>
+          )}
+
           <div className="flex items-center gap-2">
-            <Input
-              type="number"
-              value={cost}
-              onChange={(e) => setCost(e.target.value)}
-              placeholder="Chi phí ước tính"
-              className="w-40"
-            />
-            <span className="text-sm text-muted-foreground">₫</span>
+            <div className="flex items-center gap-2">
+              <Input
+                type="number"
+                value={cost}
+                onChange={(e) => setCost(e.target.value)}
+                placeholder="Chi phí"
+                className="w-32"
+              />
+              <span className="text-sm text-muted-foreground">₫</span>
+            </div>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowNotes(!showNotes)}
+              className="text-xs"
+            >
+              {showNotes ? 'Ẩn ghi chú' : '+ Ghi chú'}
+            </Button>
             <div className="flex-1" />
             <Button
               type="button"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Source_Sans_3, Lexend, JetBrains_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const sourceSans = Source_Sans_3({
@@ -36,6 +37,7 @@ export default function RootLayout({
         className={`${sourceSans.variable} ${lexend.variable} ${jetbrainsMono.variable} font-[family-name:var(--font-body)] antialiased bg-gray-50`}
       >
         {children}
+        <Toaster position="bottom-right" richColors />
       </body>
     </html>
   );

@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Share2, Users, Calendar, Check, Copy } from 'lucide-react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { formatDateRange } from '@/lib/utils';
 import { generateShareUrl } from '@/lib/share';
 import type { Trip } from '@/types';
@@ -25,6 +27,7 @@ export function TripHeader({ trip, onUpdateTitle }: TripHeaderProps) {
   const handleTitleSave = () => {
     if (title.trim() && title !== trip.title) {
       onUpdateTitle(title.trim());
+      toast.success('Đã cập nhật tên chuyến đi');
     }
     setIsEditingTitle(false);
   };
@@ -34,22 +37,30 @@ export function TripHeader({ trip, onUpdateTitle }: TripHeaderProps) {
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shareUrl);
     setCopied(true);
+    toast.success('Đã sao chép link chia sẻ');
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <>
+    <TooltipProvider>
       <header className="sticky top-0 z-50 bg-white border-b px-4 py-3 md:px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => router.push('/')}
-              className="shrink-0"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => router.push('/')}
+                  className="shrink-0"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Về trang chủ</p>
+              </TooltipContent>
+            </Tooltip>
 
             <div className="min-w-0">
               {isEditingTitle ? (
@@ -62,12 +73,19 @@ export function TripHeader({ trip, onUpdateTitle }: TripHeaderProps) {
                   className="font-[family-name:var(--font-display)] text-lg font-semibold h-9"
                 />
               ) : (
-                <h1
-                  onClick={() => setIsEditingTitle(true)}
-                  className="font-[family-name:var(--font-display)] text-lg font-semibold text-gray-900 truncate cursor-pointer hover:text-teal-600"
-                >
-                  {trip.title}
-                </h1>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <h1
+                      onClick={() => setIsEditingTitle(true)}
+                      className="font-[family-name:var(--font-display)] text-lg font-semibold text-gray-900 truncate cursor-pointer hover:text-teal-600"
+                    >
+                      {trip.title}
+                    </h1>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Nhấn để sửa tên</p>
+                  </TooltipContent>
+                </Tooltip>
               )}
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
@@ -82,13 +100,20 @@ export function TripHeader({ trip, onUpdateTitle }: TripHeaderProps) {
             </div>
           </div>
 
-          <Button
-            onClick={() => setShowShareDialog(true)}
-            className="shrink-0 bg-teal-600 hover:bg-teal-700"
-          >
-            <Share2 className="h-4 w-4 mr-2" />
-            Chia sẻ
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => setShowShareDialog(true)}
+                className="shrink-0 bg-teal-600 hover:bg-teal-700"
+              >
+                <Share2 className="h-4 w-4 mr-2" />
+                Chia sẻ
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Tạo link chia sẻ (chỉ xem)</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </header>
 
@@ -135,6 +160,6 @@ export function TripHeader({ trip, onUpdateTitle }: TripHeaderProps) {
           </div>
         </DialogContent>
       </Dialog>
-    </>
+    </TooltipProvider>
   );
 }
