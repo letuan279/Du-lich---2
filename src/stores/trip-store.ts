@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { addDays, format, differenceInDays } from 'date-fns';
 import type { Trip, Day, Activity, ActivityCategory, CostBreakdown } from '@/types';
 import { DEFAULT_CURRENCY, DEFAULT_TIMEZONE, DEFAULT_NUMBER_OF_PEOPLE } from '@/lib/constants';
+import { createSampleHaLongTrip } from '@/lib/sample-data';
 
 interface TripStore {
   trips: Trip[];
@@ -29,6 +30,9 @@ interface TripStore {
   // Computed
   getCurrentTrip: () => Trip | null;
   getCostBreakdown: (tripId: string) => CostBreakdown;
+  
+  // Initialize with sample data
+  initializeSampleData: () => void;
 }
 
 function generateDaysForTrip(tripId: string, startDate: string, endDate: string): Day[] {
@@ -308,9 +312,23 @@ export const useTripStore = create<TripStore>()(
           byCategory,
         };
       },
+      
+      initializeSampleData: () => {
+        const state = get();
+        if (state.trips.length === 0) {
+          const sampleTrip = createSampleHaLongTrip();
+          set({ trips: [sampleTrip], currentTripId: sampleTrip.id });
+        }
+      },
     }),
     {
       name: 'trip-planner-storage',
+      onRehydrateStorage: () => (state) => {
+        // Initialize sample data after rehydration if no trips exist
+        if (state && state.trips.length === 0) {
+          state.initializeSampleData();
+        }
+      },
     }
   )
 );
